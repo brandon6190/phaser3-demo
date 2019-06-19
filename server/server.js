@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static(join(__dirname, '../assets')));
+app.use(express.static(join(__dirname, '../src')));
 
 app.get('/', (req, res) => {
   res.sendFile(join(__dirname, '../view/index.html'));
