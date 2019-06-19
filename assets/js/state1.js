@@ -1,9 +1,11 @@
-let demo = {}
+console.log('hi from state1.js');
 
-demo.state1 = function() {}
+// let demo = {};
 
-demo.state1.prototype = {
-  preload() {},
-  create() {},
-  update() {},
-}
+// demo.state1 = function() {}
+
+// demo.state1.prototype = {
+//   preload() {},
+//   create() {},
+//   update() {},
+// }
