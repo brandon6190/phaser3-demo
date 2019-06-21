@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import gameConfig from './app/gameConfig';
 
+let game;
+
 function newGame () {
   if (game) return;
   game = new Phaser.Game(gameConfig);
@@ -12,8 +14,6 @@ function destroyGame () {
   game.runDestroy();
   game = null;
 }
-
-let game;
 
 if (module.hot) {
   module.hot.dispose(destroyGame);
