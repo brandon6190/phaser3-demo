@@ -1,61 +1,23 @@
-const gameCanvas = document.createElement('canvas');
+import Phaser from 'phaser';
+import gameConfig from './app/gameConfig';
 
-
-const spaceImg = require('./assets/skies/space3.png');
-const logoImg = require('./assets/sprites/logo.png');
-const redParticleImg = require('./assets/particles/red.png');
-
-gameCanvas.id = 'main-scene';
-gameCanvas.style = 'border: 1px solid firebrick'
-
-document.body.appendChild(gameCanvas);
-
-const config = {
-	type: Phaser.CANVAS,
-	width: 800,
-  height: 620,
-  canvas: document.getElementById('main-scene'),
-	physics: {
-		default: 'arcade',
-		arcade: {
-			gravity: { y: 200 },
-		},
-	},
-	scene: {
-		preload: preload,
-		create: create,
-	},
-};
-
-function preload() {
-	this.load.setBaseURL('http://localhost:1234');
-
-	this.load.image('sky', spaceImg);
-	this.load.image('logo', logoImg);
-  this.load.image('red', redParticleImg);
-  
+function newGame () {
+  if (game) return;
+  game = new Phaser.Game(gameConfig);
 }
 
-function create() {
-	this.add.image(400, 300, 'sky');
-
-	const particles = this.add.particles('red');
-  
-	const emitter = particles.createEmitter({
-    speed: 50,
-		scale: { start: 0.5, end: 0 },
-		blendMode: 'ADD',
-	});
-  
-  const logo = this.physics.add.image(400, 100, 'logo');
-
-  logo.setVelocity(100, 200);
-  logo.setBounce(1, 1);
-  logo.setCollideWorldBounds(true);
-
-	emitter.startFollow(logo);
+function destroyGame () {
+  if (!game) return;
+  game.destroy(true);
+  game.runDestroy();
+  game = null;
 }
 
-const game = new Phaser.Game(config);
+let game;
 
-console.log('game.config = ', game.config);
+if (module.hot) {
+  module.hot.dispose(destroyGame);
+  module.hot.accept(newGame);
+}
+
+if (!game) newGame();
