@@ -23,7 +23,7 @@ export default {
 
     this.input.on('pointerdown', () => {
       console.log('pointerdown was fired');
-      this.scene.start('play');
+      this.scene.switch('play');
     }, this);
   }
 };
