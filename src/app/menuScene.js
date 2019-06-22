@@ -3,7 +3,7 @@ export default {
   key: 'menu',
 
   create () {
-    this.add.image(400, 300, 'sky');
+    this.add.image(400, 300, 'space');
 
     const particles = this.add.particles('red');
 
@@ -20,5 +20,10 @@ export default {
     logo.setCollideWorldBounds(true);
 
     emitter.startFollow(logo);
+
+    this.input.on('pointerdown', () => {
+      console.log('pointerdown was fired');
+      this.scene.start('play');
+    }, this);
   }
 };
