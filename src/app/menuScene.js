@@ -22,7 +22,6 @@ export default {
     emitter.startFollow(logo);
 
     this.input.on('pointerdown', () => {
-      console.log('pointerdown was fired');
       this.scene.switch('play');
     }, this);
   }
