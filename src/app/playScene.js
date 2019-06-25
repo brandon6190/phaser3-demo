@@ -3,9 +3,14 @@ let platforms;
 let player;
 let cursors;
 let stars;
+let score = 0;
+let scoreText;
 
 function collectStar (player, star) {
   star.disableBody(true, true);
+
+  score += 10;
+  scoreText.setText(`Score: ${score}`);
 }
 
 export default {
@@ -44,6 +49,8 @@ export default {
     this.physics.add.collider(stars, platforms);
 
     this.physics.add.overlap(player, stars, collectStar, null, true);
+
+    scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '30px', fill: '#000' });
   },
 
   update () {
