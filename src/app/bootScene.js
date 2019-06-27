@@ -7,6 +7,7 @@ import platformImg from '../assets/gameEnv/platform.png';
 import logoImg from '../assets/sprites/logo.png';
 import redParticleImg from '../assets/particles/red.png';
 import dudeImg from '../assets/sprites/dude.png';
+import explodeImg from '../assets/sprites/explode.png';
 
 export default {
   key: 'boot',
@@ -20,6 +21,7 @@ export default {
     this.load.image('logo', logoImg);
     this.load.image('red', redParticleImg);
     this.load.spritesheet('dude', dudeImg, { frameWidth: 32, frameHeight: 48 });
+    this.load.spritesheet('explode', explodeImg, { frameWidth: 32, frameHeight: 48 })
 
     const rect = new Phaser.Geom.Rectangle(200, 285, 400, 30);
     const gfx = this.add.graphics();
@@ -34,7 +36,7 @@ export default {
   },
 
   create () {
-    // Players Animation
+    // Creating Animation
     this.anims.create({
       key: 'left',
       frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -53,6 +55,12 @@ export default {
       frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
       frameRate: 10,
       repeat: -1
+    });
+
+    this.anims.create({
+      key: 'kaboom',
+      frames: this.anims.generateFrameNumbers('explode', { start: 0, end: 15 }),
+      frameRate: 10
     });
 
     this.scene.start('menu');
