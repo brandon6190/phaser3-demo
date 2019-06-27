@@ -3,25 +3,60 @@ let platforms;
 let player;
 let cursors;
 let stars;
-let score = 0;
+let score;
 let scoreText;
+let bombs;
+let gameOver;
 
 function collectStar (player, star) {
   star.disableBody(true, true);
 
   score += 10;
   scoreText.setText(`Score: ${score}`);
+
+  if (stars.countActive(true) === 0) {
+    stars.children.iterate(function (child) {
+      child.enableBody(true, child.x, 0, true, true);
+    });
+
+    const x =
+      player.x < 400
+        ? Phaser.Math.Between(400, 800)
+        : Phaser.Math.Between(0, 400);
+
+    const bomb = bombs.create(x, 16, 'bomb');
+    bomb.setBounce(1);
+    bomb.setCollideWorldBounds(true);
+    bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+  }
+}
+
+function hitBomb (player, star) {
+  this.physics.pause();
+
+  player.setTint(0xff0000);
+  player.anims.play('turn');
+
+  gameOver = true;
 }
 
 export default {
   key: 'play',
+
+  init () {
+    gameOver = false;
+    score = 0;
+  },
 
   create () {
     this.add.image(400, 300, 'sky');
 
     platforms = this.physics.add.staticGroup();
 
-    platforms.create(400, 568, 'platform').setScale(2).refreshBody();
+    platforms
+      .create(400, 568, 'platform')
+      .setScale(2)
+      .refreshBody();
 
     platforms.create(600, 400, 'platform');
     platforms.create(50, 250, 'platform');
@@ -50,7 +85,15 @@ export default {
 
     this.physics.add.overlap(player, stars, collectStar, null, true);
 
-    scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '30px', fill: '#000' });
+    scoreText = this.add.text(16, 16, 'Score: 0', {
+      fontSize: '30px',
+      fill: '#000'
+    });
+
+    bombs = this.physics.add.group();
+
+    this.physics.add.collider(bombs, platforms);
+    this.physics.add.collider(player, bombs, hitBomb, null, this);
   },
 
   update () {
