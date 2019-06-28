@@ -111,5 +111,9 @@ export default {
     if (cursors.up.isDown && player.body.touching.down) {
       player.setVelocityY(-275);
     }
+  },
+
+  extend: {
+
   }
 };
