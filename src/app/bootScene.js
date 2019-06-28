@@ -21,7 +21,10 @@ export default {
     this.load.image('logo', logoImg);
     this.load.image('red', redParticleImg);
     this.load.spritesheet('dude', dudeImg, { frameWidth: 32, frameHeight: 48 });
-    this.load.spritesheet('explode', explodeImg, { frameWidth: 32, frameHeight: 48 })
+    this.load.spritesheet('explode', explodeImg, {
+      frameWidth: 32,
+      frameHeight: 48
+    });
 
     const rect = new Phaser.Geom.Rectangle(200, 285, 400, 30);
     const gfx = this.add.graphics();
@@ -46,7 +49,7 @@ export default {
 
     this.anims.create({
       key: 'turn',
-      frames: [ { key: 'dude', frame: 4 } ],
+      frames: [{ key: 'dude', frame: 4 }],
       frameRate: 20
     });
 
